@@ -1,7 +1,7 @@
 var express = require('express');
 var router= express.Router();
 var mongojs=require('mongojs');
-var db = mongojs('mongodb://divyank01:divyank99@ds251518.mlab.com:51518/vid_chat',['users']);
+var db = mongojs('**** Nice try ****',['users']);
 
 router.post('/CL',(req,resp,next)=>{
     console.log('hitting post for check login'+req.body.username);
