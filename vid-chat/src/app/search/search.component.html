@@ -1,0 +1,12 @@
+<div class="col-md-12">
+  <br/><br/><br/>
+  <input type="text" [(ngModel)]="query"/><input type="button" (click)="search();" value="search"/>
+  <ul>
+      <li class="nav-item li_friend" *ngFor="let user of results">
+          <a class="nav-link" (click)="send_friend_request(user);">
+              <span data-feather="file-text"></span>
+              {{user.firstname}} {{user.lastname}}
+          </a>
+      </li>
+  </ul>
+</div>

@@ -1,0 +1,24 @@
+<div id="register" class="text-center">
+  <div class="form-signin">
+      <img class="mb-4" src="/assets/images/smile.png" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Welcome</h1>
+      <label for="_inputEmail" class="sr-only">username</label>
+      <input type="text" id="_inputEmail" class="form-control" placeholder="Username" [(ngModel)]="user.login.username"  required autofocus>
+      <label for="_inputPassword" class="sr-only">Password</label>
+      <input type="password" id="_inputPassword" class="form-control" placeholder="Password" [(ngModel)]="user.login.password" required>
+      <label for="email" class="sr-only">email</label>
+      <input type="email" id="email" class="form-control" placeholder="Email address" [(ngModel)]="user.email" required>
+      <label for="firstname" class="sr-only">firstname</label>
+      <input type="text" id="firstname" class="form-control" placeholder="First Name" [(ngModel)]="user.firstname"  required>
+      <label for="lastname" class="sr-only">lastname</label>
+      <input type="text" id="lastname" class="form-control" placeholder="Last Name" [(ngModel)]="user.lastname" required>
+      <label for="sex" class="sr-only">sex</label>
+      <input type="text" id="sex" class="form-control" placeholder="Sex" [(ngModel)]="user.sex" required>
+      <label for="age" class="sr-only">age</label>
+      <input type="text" id="age" class="form-control" placeholder="Age" [(ngModel)]="user.age" required>
+      <br/>
+      <button class="btn btn-lg btn-dark btn-block" type="button" (click)='add_user();'>Register</button>
+      <a class="new_user" routerLink="/login">Existing user</a>
+      <p class="mt-5 mb-3 text-muted">&copy; Divyank Sharma</p>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+#remote{
+    /*background-color: #8080AF;*/
+    width: 98%;
+    height: 96%;
+    position: absolute;
+    z-index: -3;
+}
+#self{
+    z-index: 1;
+    width: 20%;
+    height: 18%;
+    /*background-color: #70A570;*/
+    position: absolute;
+    top: 40px;
+    left:40px;
+}
+#r_vid{
+    /*width: 100%;
+    height: 100%;*/
+    z-index: 2;
+    transform: rotateY(180deg);
+}
+#s_vid{
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    transform: rotateY(180deg);
+    /*position: relative;
+    top: 20px;
+    left:20px;*/
+}

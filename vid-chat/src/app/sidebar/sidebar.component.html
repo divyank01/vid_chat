@@ -1,0 +1,46 @@
+<nav class="sidebar col-md-12" style="overflow:auto;">
+    <div class="side_tabs"><a [routerLink]="['/home', {outlets: {'side': ['search']}}]">Find Friends</a></div>
+    <div class="side_tabs"><a [routerLink]="['/home', {outlets: {'side': ['profile']}}]">Profile</a></div>
+    <div class="toggle-btn side_tabs">
+        <font class="f_toggle" data-toggle="collapse" data-target="#menu-content">Friends 
+          <span class="f_count">{{friends?.length}}</span></font>
+        <ul class="collapse p-0 m-0" id="menu-content">
+                <li class="nav-item li_friend" *ngFor="let friend of friends">
+                    <a class="nav-link" (click)="makeCall(friend);">
+                        <span data-feather="file-text"></span>
+                        <svg height="10" width="10" *ngIf="friend.isOnline" style="left:0">
+                            <circle cx="5" cy="5" r="4" fill="green" />
+                        </svg>
+                        <svg height="10" width="10" *ngIf="!friend.isOnline" style="left:0">
+                            <circle cx="5" cy="5" r="4" fill="white" />
+                        </svg>
+                        {{friend.firstname}} {{friend.lastname}}
+                    </a>
+                </li>
+            </ul>
+    </div>
+    <div class="toggle-btn side_tabs">
+        <font class="f_toggle" data-toggle="collapse" data-target="#fr">Friend Requests
+          <span class="f_count">{{friend_requests?.length}}</span></font>
+        <ul class="collapse p-0 m-0" id="fr">
+                <li class="nav-item li_friend" *ngFor="let friend of friend_requests">
+                    <a class="nav-link" (click)="accept_fr(friend);">
+                        <span data-feather="file-text"></span>
+                        {{friend.firstname}} {{friend.lastname}}
+                    </a>
+                </li>
+            </ul>
+    </div>
+    <div class="toggle-btn side_tabs">
+        <font class="f_toggle" data-toggle="collapse" data-target="#rs">Requests sent 
+          <span class="f_count">{{requests_sent?.length}}</span></font>
+        <ul class="collapse p-0 m-0" id="rs">
+                <li class="nav-item li_friend" *ngFor="let friend of requests_sent">
+                    <a class="nav-link">
+                        <span data-feather="file-text"></span>
+                        {{friend.firstname}} {{friend.lastname}}
+                    </a>
+                </li>
+            </ul>
+    </div>
+</nav>
