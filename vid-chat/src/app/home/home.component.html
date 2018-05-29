@@ -4,10 +4,31 @@
     <app-sidebar (emmiter)='makeCall($event);'></app-sidebar>
   </div>
   <main class="col-md-10" style="height:100%">
-      <div [ngClass]="{'hide': !onCall}">
-        <div>blah</div>
+      <div #viewChannels [ngClass]="{'hide': !onCall}">
         <div id="remote">
             <video #remote id="r_vid" src="" autoplay="true"></video>
+            <div class="controls" style="background-color:whitesmoke">
+              <span class="">
+                <button class="ctrl-btn" (click)="hangup();">
+                    <svg class="svg-icon" viewBox="0 0 1154 1177" aria-labelledby="fnsi-bootstrap-off-title" id="si-bootstrap-off" width="100%" height="100%"><title id="fnsi-bootstrap-off-title">Hang Up</title><path d="M527 0h100q21 0 35.5 14.5T677 50v400q0 21-14.5 35.5T627 500H527q-21 0-35.5-14.5T477 450V50q0-21 14.5-35.5T527 0zm250 225V59q167 62 272 209.5T1154 600q0 117-45.5 224t-123 184.5-184.5 123-224 45.5-224-45.5-184.5-123T45.5 824 0 600q0-184 105-331.5T377 59v166q-103 55-165 155t-62 220q0 116 57 214.5T362.5 970t214.5 57 214.5-57T947 814.5t57-214.5q0-120-62-220T777 225z"></path></svg>
+                </button>
+              </span>
+              <span class="">
+                <button (click)="mute();" class="ctrl-btn">
+                  <svg class="svg-icon" id="aud01">
+                      <title id="fnsi-bootstrap-off-title">Mute</title>
+                    <path d="M32 18h-3.4c0 1.49-.31 2.87-.87 4.1l2.46 2.46C31.33 22.61 32 20.38 32 18zm-8.03.33c0-.11.03-.22.03-.33V6c0-3.32-2.69-6-6-6s-6 2.68-6 6v.37l11.97 11.96zM2.55 2L0 4.55l12.02 12.02v1.44c0 3.31 2.67 6 5.98 6 .45 0 .88-.06 1.3-.15l3.32 3.32c-1.43.66-3 1.03-4.62 1.03-5.52 0-10.6-4.2-10.6-10.2H4c0 6.83 5.44 12.47 12 13.44V38h4v-6.56c1.81-.27 3.53-.9 5.08-1.81L33.45 38 36 35.46 2.55 2z"></path>
+                  </svg>
+                </button>
+              </span>
+              <span class="">
+                <button (click)="go_fullscreen();" class="ctrl-btn">
+                    <svg viewBox="0 0 1200 1200" aria-labelledby="djsi-bootstrap-fullscreen-title" id="si-bootstrap-fullscreen" width="100%" height="100%" class="svg-icon">
+                      <title id="djsi-bootstrap-fullscreen-title">Fullscreen</title>
+                      <path d="M50 0h300q21 0 25 10.5T365 35l-94 94 199 199q7 8 7 18t-7 18L364 470q-8 7-18 7t-18-7L129 271l-94 94q-14 14-24.5 10T0 350V50q0-21 14.5-35.5T50 0zm800 0h300q21 0 35.5 14.5T1200 50v300q0 21-10.5 25t-24.5-10l-94-94-199 199q-8 7-18 7t-18-7L730 364q-7-8-7-18t7-18l199-199-94-94q-14-14-10-24.5T850 0zM364 730l106 106q7 8 7 18t-7 18l-199 199 94 94q14 14 10 24.5t-25 10.5H50q-21 0-35.5-14.5T0 1150V850q0-21 10.5-25T35 835l94 94 199-199q8-7 18-7t18 7zm707 199l94-94q14-14 24.5-10t10.5 25v300q0 21-14.5 35.5T1150 1200H850q-21 0-25-10.5t10-24.5l94-94-199-199q-7-8-7-18t7-18l106-106q8-7 18-7t18 7z"></path></svg>
+                </button>
+              </span>
+          </div>
         </div>
         <div id="self">
             <video #local id="s_vid" autoplay="true" src=""></video>
@@ -18,9 +39,6 @@
                   <path d="M340.273,275.083l-53.755-53.761c-10.707-10.664-28.438-10.34-39.518,0.744l-27.082,27.076     c-1.711-0.943-3.482-1.928-5.344-2.973c-17.102-9.476-40.509-22.464-65.14-47.113c-24.704-24.701-37.704-48.144-47.209-65.257     c-1.003-1.813-1.964-3.561-2.913-5.221l18.176-18.149l8.936-8.947c11.097-11.1,11.403-28.826,0.721-39.521L73.39,8.194     C62.708-2.486,44.969-2.162,33.872,8.938l-15.15,15.237l0.414,0.411c-5.08,6.482-9.325,13.958-12.484,22.02     C3.74,54.28,1.927,61.603,1.098,68.941C-6,127.785,20.89,181.564,93.866,254.541c100.875,100.868,182.167,93.248,185.674,92.876     c7.638-0.913,14.958-2.738,22.397-5.627c7.992-3.122,15.463-7.361,21.941-12.43l0.331,0.294l15.348-15.029     C350.631,303.527,350.95,285.795,340.273,275.083z" style="fill: rgb(0, 0, 0);"></path>
               </svg>
             </button>
-        </div>
-        <div>
-          <button (click)="hangup();">hangup</button>
         </div>
       </div>
       <div [ngClass]="{'hide': onCall}">

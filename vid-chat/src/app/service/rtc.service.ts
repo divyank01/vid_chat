@@ -61,6 +61,15 @@ export class RtcService {
       this.ICE_queue.push(data);
     }else if(data.type==='STATUS_UPDATE'){
       this.recv_friends_status(data);
+    }else if(data.type==='INCOMING_FR'){
+      //u got a new fr ;)
+      console.log('got a new fr');
+      console.log(msg.data);
+      this.handle_incoming_fr(data);
+    }else if(data.type==='FR_ACCEPT'){
+      //handle accepted fr
+      console.log('your fr got accepted by '+data.friend);
+      this.handle_accepted_fr(data);
     }else{
       log('error aaya hai on recv_ws_msg');
     }
@@ -130,15 +139,15 @@ export class RtcService {
       (local_stream)=>{
         this.pc.addStream(local_stream);
         this.streams.local=local_stream;
-        evnt.emit('GOT_STREAM',data);
-      },(error)=>{
-        console.log(error);
-      }
-    )
-    navigator.getUserMedia(
-      this.configService.video_only,
-      (local_stream)=>{
-        this.streams.local_muted=local_stream;
+        navigator.getUserMedia(
+          this.configService.video_only,
+          (l_stream)=>{
+            this.streams.local_muted=l_stream;
+            evnt.emit('GOT_STREAM',data);
+          },(error)=>{
+            console.log(error);
+          }
+        )
       },(error)=>{
         console.log(error);
       }
@@ -238,16 +247,48 @@ export class RtcService {
    * -------------------------------------------------- handle friends -----------------------------------------------------
    */
    private friends;
+   private req_sent;
+   private req_recv;
 
-   updateFriends(uname:string,friends:any){
+   updateFriends(uname:string,friends:any,req_sent,req_recv){
      log('sending friends');
      this.friends=friends;
+     this.req_sent=req_sent;
+     this.req_recv=req_recv;
      let msg={
        username:uname,
        FRIENDS:friends,
        type:'FRIENDS'
      };
      this.send(JSON.stringify(msg));
+   }
+
+   send_fr(user,friend){
+    let msg={
+      user:user,
+      friend:friend,
+      type:'SFR'
+    };
+    this.req_sent.push(friend);
+    this.send(JSON.stringify(msg));
+   }
+
+   accept_fr(user,friend){
+    let msg={
+      user:user,
+      friend:friend,
+      type:'AFR'
+    };
+    this.friends.push(friend);
+    for(let i=0;i<this.req_recv.length;i++){
+      if(!this.req_recv[i] || this.req_recv[i].username===friend.username){
+        //var index = this.req_recv.indexOf(i, 0);
+        //if (index > -1) {
+          this.req_recv.splice(i, 1);
+        //}
+      }
+    }
+    this.send(JSON.stringify(msg));
    }
 
    private recv_friends_status(data){
@@ -264,6 +305,21 @@ export class RtcService {
         }
       });
     });
-    
+   }
+
+   private handle_incoming_fr(data){
+      this.req_recv.push(data.friend);
+   }
+   
+   private handle_accepted_fr(data){
+      this.friends.push(data.friend);
+      for(let i=0;i<this.req_sent.length;i++){
+        if(!this.req_sent[i] || this.req_sent[i].username===data.friend.username){
+          //var index = this.req_sent.indexOf(i, 0);
+          //if (index > -1) {
+            this.req_sent.splice(i, 1);
+          //}
+        }
+      }
    }
 }

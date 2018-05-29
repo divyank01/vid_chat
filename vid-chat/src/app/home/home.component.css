@@ -1,9 +1,8 @@
 #remote{
-    /*background-color: #8080AF;*/
-    width: 98%;
+    /*background-color: #8080AF;
+    width: 98%;*/
     height: 96%;
     position: absolute;
-    z-index: -3;
 }
 #self{
     z-index: 1;

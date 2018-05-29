@@ -37,8 +37,9 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     let user=this.loginService.user;
-    if(user==null){
+    if(!user || user===null){
       this.router.navigateByUrl('login');
+      return;
     }
     if(!user.sent){
       user.sent=[]
@@ -50,7 +51,7 @@ export class SidebarComponent implements OnInit {
     this.userService.get_friends(user.username).subscribe((data)=>{
       this.friends=data as Array<User>;
       this.rtcService.register(user.username);
-      this.rtcService.updateFriends(user.username,this.friends);
+      this.rtcService.updateFriends(user.username,this.friends,this.requests_sent,this.friend_requests);
     });
     let pendings=[].concat(user.pending).concat(user.sent);
     this.userService.get_users(pendings).subscribe((data)=>{
@@ -67,13 +68,20 @@ export class SidebarComponent implements OnInit {
   }
 
   makeCall(user:User){
-    this.emmiter.emit(user.username);
+    if(user.isOnline)
+      this.emmiter.emit(user.username);
   }
 
   accept_fr(user:User){
     console.log(' called afr '+JSON.stringify(user));
-    this.userService.accept_fr(this.loginService.user.username,user.username).subscribe((data)=>{
-      console.log(data);
-    });
+    let loggedin_user={
+      username:this.loginService.user.username,
+      firstname:this.loginService.user.firstname,
+      lastname:this.loginService.user.lastname
+    }
+    this.rtcService.accept_fr(loggedin_user,user);
+    //this.userService.accept_fr(this.loginService.user.username,user.username).subscribe((data)=>{
+    //  console.log(data);
+    //});
   }
 }

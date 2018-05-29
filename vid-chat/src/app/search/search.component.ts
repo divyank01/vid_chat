@@ -1,3 +1,4 @@
+import { RtcService } from '../service/rtc.service';
 import { Component, OnInit, Output, Input } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { User } from '../models/user';
@@ -14,7 +15,7 @@ export class SearchComponent implements OnInit {
   @Output() results:Array<User>;
   @Input() query:string;
 
-  constructor(private userService:UserService,private loginService:LoginService) { }
+  constructor(private userService:UserService,private loginService:LoginService,private rtcService:RtcService) { }
 
   ngOnInit() {
 
@@ -22,16 +23,17 @@ export class SearchComponent implements OnInit {
 
   send_friend_request(user:User){
     console.log('sfr '+JSON.stringify(user));
-    
-    this.userService.send_fr(this.loginService.user.username,user.username).subscribe((data)=>{
-      JSON.stringify(data);
-    });
+    let loggedin_user={
+      username:this.loginService.user.username,
+      firstname:this.loginService.user.firstname,
+      lastname:this.loginService.user.lastname
+    }
+    this.rtcService.send_fr(loggedin_user,user);
   }  
 
   search(){
     this.userService.search_user(this.query).subscribe((data)=>{
       this.results=data as Array<User>;
-      console.log(JSON.stringify(this.results));
     });
   }
 

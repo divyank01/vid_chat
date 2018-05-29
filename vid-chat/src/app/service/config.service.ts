@@ -17,12 +17,21 @@ export class ConfigService {
 
   av={
     video:true,
-    audio:true
+    audio:true//change this,
+    
   };
 
+  private keys={
+    AWS:'54.214.115.221',
+    AWS_PORT:'9200',
+    LOCAL:'localhost',
+    L_IP:'192.168.0.5',
+    L_PORT:'9900'
+  }
+
   ws_config={
-    HOST:'192.168.0.5',
-    PORT:'9900',
+    HOST:this.keys.AWS,
+    PORT:this.keys.AWS_PORT,
     PROTO:'wss://'
   };
 

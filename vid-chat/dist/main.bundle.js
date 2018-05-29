@@ -214,14 +214,14 @@ exports.HeaderComponent = HeaderComponent;
 /***/ "./src/app/home/home.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "#remote{\n    /*background-color: #8080AF;*/\n    width: 98%;\n    height: 96%;\n    position: absolute;\n    z-index: -3;\n}\n#self{\n    z-index: 1;\n    width: 20%;\n    height: 18%;\n    /*background-color: #70A570;*/\n    position: absolute;\n    top: 40px;\n    left:40px;\n}\n#r_vid{\n    /*width: 100%;\n    height: 100%;*/\n    z-index: 2;\n    -webkit-transform: rotateY(180deg);\n            transform: rotateY(180deg);\n}\n#s_vid{\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n    -webkit-transform: rotateY(180deg);\n            transform: rotateY(180deg);\n    /*position: relative;\n    top: 20px;\n    left:20px;*/\n}"
+module.exports = "#remote{\n    /*background-color: #8080AF;\n    width: 98%;*/\n    height: 96%;\n    position: absolute;\n}\n#self{\n    z-index: 1;\n    width: 20%;\n    height: 18%;\n    /*background-color: #70A570;*/\n    position: absolute;\n    top: 40px;\n    left:40px;\n}\n#r_vid{\n    /*width: 100%;\n    height: 100%;*/\n    z-index: 2;\n    -webkit-transform: rotateY(180deg);\n            transform: rotateY(180deg);\n}\n#s_vid{\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n    -webkit-transform: rotateY(180deg);\n            transform: rotateY(180deg);\n    /*position: relative;\n    top: 20px;\n    left:20px;*/\n}"
 
 /***/ }),
 
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n<div class=\"row h-100\">\n  <div class=\"col-md-2\">\n    <app-sidebar (emmiter)='makeCall($event);'></app-sidebar>\n  </div>\n  <main class=\"col-md-10\" style=\"height:100%\">\n      <div [ngClass]=\"{'hide': !onCall}\">\n        <div>blah</div>\n        <div id=\"remote\">\n            <video #remote id=\"r_vid\" src=\"\" autoplay=\"true\"></video>\n        </div>\n        <div id=\"self\">\n            <video #local id=\"s_vid\" autoplay=\"true\" src=\"\"></video>\n        </div>\n        <div [ngClass]=\"{'hide': incoming}\" class=\"shield text-center\">\n            <button #pickup style=\"background:  none;border:  none;\">\n              <svg width=\"54.077px\" height=\"54.077px\" viewBox=\"0 0 540.077 540.077\">\n                  <path d=\"M340.273,275.083l-53.755-53.761c-10.707-10.664-28.438-10.34-39.518,0.744l-27.082,27.076     c-1.711-0.943-3.482-1.928-5.344-2.973c-17.102-9.476-40.509-22.464-65.14-47.113c-24.704-24.701-37.704-48.144-47.209-65.257     c-1.003-1.813-1.964-3.561-2.913-5.221l18.176-18.149l8.936-8.947c11.097-11.1,11.403-28.826,0.721-39.521L73.39,8.194     C62.708-2.486,44.969-2.162,33.872,8.938l-15.15,15.237l0.414,0.411c-5.08,6.482-9.325,13.958-12.484,22.02     C3.74,54.28,1.927,61.603,1.098,68.941C-6,127.785,20.89,181.564,93.866,254.541c100.875,100.868,182.167,93.248,185.674,92.876     c7.638-0.913,14.958-2.738,22.397-5.627c7.992-3.122,15.463-7.361,21.941-12.43l0.331,0.294l15.348-15.029     C350.631,303.527,350.95,285.795,340.273,275.083z\" style=\"fill: rgb(0, 0, 0);\"></path>\n              </svg>\n            </button>\n        </div>\n        <div>\n          <button (click)=\"hangup();\">hangup</button>\n        </div>\n      </div>\n      <div [ngClass]=\"{'hide': onCall}\">\n        <router-outlet name=\"side\"></router-outlet>\n      </div>\n  </main>\n</div>"
+module.exports = "<app-header></app-header>\n<div class=\"row h-100\">\n  <div class=\"col-md-2\">\n    <app-sidebar (emmiter)='makeCall($event);'></app-sidebar>\n  </div>\n  <main class=\"col-md-10\" style=\"height:100%\">\n      <div #viewChannels [ngClass]=\"{'hide': !onCall}\">\n        <div id=\"remote\">\n            <video #remote id=\"r_vid\" src=\"\" autoplay=\"true\"></video>\n            <div class=\"controls\" style=\"background-color:whitesmoke\">\n              <span class=\"\">\n                <button class=\"ctrl-btn\" (click)=\"hangup();\">\n                    <svg class=\"svg-icon\" viewBox=\"0 0 1154 1177\" aria-labelledby=\"fnsi-bootstrap-off-title\" id=\"si-bootstrap-off\" width=\"100%\" height=\"100%\"><title id=\"fnsi-bootstrap-off-title\">Hang Up</title><path d=\"M527 0h100q21 0 35.5 14.5T677 50v400q0 21-14.5 35.5T627 500H527q-21 0-35.5-14.5T477 450V50q0-21 14.5-35.5T527 0zm250 225V59q167 62 272 209.5T1154 600q0 117-45.5 224t-123 184.5-184.5 123-224 45.5-224-45.5-184.5-123T45.5 824 0 600q0-184 105-331.5T377 59v166q-103 55-165 155t-62 220q0 116 57 214.5T362.5 970t214.5 57 214.5-57T947 814.5t57-214.5q0-120-62-220T777 225z\"></path></svg>\n                </button>\n              </span>\n              <span class=\"\">\n                <button (click)=\"mute();\" class=\"ctrl-btn\">\n                  <svg class=\"svg-icon\" id=\"aud01\">\n                      <title id=\"fnsi-bootstrap-off-title\">Mute</title>\n                    <path d=\"M32 18h-3.4c0 1.49-.31 2.87-.87 4.1l2.46 2.46C31.33 22.61 32 20.38 32 18zm-8.03.33c0-.11.03-.22.03-.33V6c0-3.32-2.69-6-6-6s-6 2.68-6 6v.37l11.97 11.96zM2.55 2L0 4.55l12.02 12.02v1.44c0 3.31 2.67 6 5.98 6 .45 0 .88-.06 1.3-.15l3.32 3.32c-1.43.66-3 1.03-4.62 1.03-5.52 0-10.6-4.2-10.6-10.2H4c0 6.83 5.44 12.47 12 13.44V38h4v-6.56c1.81-.27 3.53-.9 5.08-1.81L33.45 38 36 35.46 2.55 2z\"></path>\n                  </svg>\n                </button>\n              </span>\n              <span class=\"\">\n                <button (click)=\"go_fullscreen();\" class=\"ctrl-btn\">\n                    <svg viewBox=\"0 0 1200 1200\" aria-labelledby=\"djsi-bootstrap-fullscreen-title\" id=\"si-bootstrap-fullscreen\" width=\"100%\" height=\"100%\" class=\"svg-icon\">\n                      <title id=\"djsi-bootstrap-fullscreen-title\">Fullscreen</title>\n                      <path d=\"M50 0h300q21 0 25 10.5T365 35l-94 94 199 199q7 8 7 18t-7 18L364 470q-8 7-18 7t-18-7L129 271l-94 94q-14 14-24.5 10T0 350V50q0-21 14.5-35.5T50 0zm800 0h300q21 0 35.5 14.5T1200 50v300q0 21-10.5 25t-24.5-10l-94-94-199 199q-8 7-18 7t-18-7L730 364q-7-8-7-18t7-18l199-199-94-94q-14-14-10-24.5T850 0zM364 730l106 106q7 8 7 18t-7 18l-199 199 94 94q14 14 10 24.5t-25 10.5H50q-21 0-35.5-14.5T0 1150V850q0-21 10.5-25T35 835l94 94 199-199q8-7 18-7t18 7zm707 199l94-94q14-14 24.5-10t10.5 25v300q0 21-14.5 35.5T1150 1200H850q-21 0-25-10.5t10-24.5l94-94-199-199q-7-8-7-18t7-18l106-106q8-7 18-7t18 7z\"></path></svg>\n                </button>\n              </span>\n          </div>\n        </div>\n        <div id=\"self\">\n            <video #local id=\"s_vid\" autoplay=\"true\" src=\"\"></video>\n        </div>\n        <div [ngClass]=\"{'hide': incoming}\" class=\"shield text-center\">\n            <button #pickup style=\"background:  none;border:  none;\">\n              <svg width=\"54.077px\" height=\"54.077px\" viewBox=\"0 0 540.077 540.077\">\n                  <path d=\"M340.273,275.083l-53.755-53.761c-10.707-10.664-28.438-10.34-39.518,0.744l-27.082,27.076     c-1.711-0.943-3.482-1.928-5.344-2.973c-17.102-9.476-40.509-22.464-65.14-47.113c-24.704-24.701-37.704-48.144-47.209-65.257     c-1.003-1.813-1.964-3.561-2.913-5.221l18.176-18.149l8.936-8.947c11.097-11.1,11.403-28.826,0.721-39.521L73.39,8.194     C62.708-2.486,44.969-2.162,33.872,8.938l-15.15,15.237l0.414,0.411c-5.08,6.482-9.325,13.958-12.484,22.02     C3.74,54.28,1.927,61.603,1.098,68.941C-6,127.785,20.89,181.564,93.866,254.541c100.875,100.868,182.167,93.248,185.674,92.876     c7.638-0.913,14.958-2.738,22.397-5.627c7.992-3.122,15.463-7.361,21.941-12.43l0.331,0.294l15.348-15.029     C350.631,303.527,350.95,285.795,340.273,275.083z\" style=\"fill: rgb(0, 0, 0);\"></path>\n              </svg>\n            </button>\n        </div>\n      </div>\n      <div [ngClass]=\"{'hide': onCall}\">\n        <router-outlet name=\"side\"></router-outlet>\n      </div>\n  </main>\n</div>"
 
 /***/ }),
 
@@ -246,6 +246,7 @@ var login_service_1 = __webpack_require__("./src/app/service/login.service.ts");
 var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
 var rtc_service_1 = __webpack_require__("./src/app/service/rtc.service.ts");
 var user_1 = __webpack_require__("./src/app/models/user.ts");
+var logging_service_1 = __webpack_require__("./src/app/service/logging.service.ts");
 var HomeComponent = /** @class */ (function () {
     function HomeComponent(userService, loginService, router, rtcService) {
         this.userService = userService;
@@ -255,6 +256,7 @@ var HomeComponent = /** @class */ (function () {
         this.friends = new Array();
         this.incoming = true;
         this.onCall = false;
+        this.muted = false;
     }
     HomeComponent.prototype.dummy_user = function () {
         var user = new user_1.User();
@@ -319,6 +321,43 @@ var HomeComponent = /** @class */ (function () {
         this.onCall = true;
         this.rtcService.call(username);
     };
+    HomeComponent.prototype.mute = function () {
+        var _this = this;
+        logging_service_1.log('mute is called');
+        this.muted = !this.muted;
+        var remote = this.streams.remote;
+        if (this.muted) {
+            remote.getAudioTracks().forEach(function (track) {
+                track.enabled = false;
+                track.addEventListener('track', _this.do_mute);
+            });
+        }
+        else {
+            remote.getAudioTracks().forEach(function (track) {
+                track.enabled = true;
+                track.removeEventListener('track', _this.do_mute);
+            });
+        }
+    };
+    HomeComponent.prototype.do_mute = function (track) {
+        logging_service_1.log('on track event listener is called to mute');
+        track.enabled = false;
+    };
+    HomeComponent.prototype.go_fullscreen = function () {
+        var elem = this.remote.nativeElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        }
+        else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+        else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        }
+        else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        }
+    };
     __decorate([
         core_1.Output(),
         __metadata("design:type", Array)
@@ -335,6 +374,10 @@ var HomeComponent = /** @class */ (function () {
         core_1.ViewChild('pickup'),
         __metadata("design:type", Object)
     ], HomeComponent.prototype, "pick", void 0);
+    __decorate([
+        core_1.ViewChild('viewChannels'),
+        __metadata("design:type", Object)
+    ], HomeComponent.prototype, "vc", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", Boolean)
@@ -597,21 +640,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var rtc_service_1 = __webpack_require__("./src/app/service/rtc.service.ts");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var user_service_1 = __webpack_require__("./src/app/service/user.service.ts");
 var login_service_1 = __webpack_require__("./src/app/service/login.service.ts");
 var SearchComponent = /** @class */ (function () {
-    function SearchComponent(userService, loginService) {
+    function SearchComponent(userService, loginService, rtcService) {
         this.userService = userService;
         this.loginService = loginService;
+        this.rtcService = rtcService;
     }
     SearchComponent.prototype.ngOnInit = function () {
     };
     SearchComponent.prototype.send_friend_request = function (user) {
         console.log('sfr ' + JSON.stringify(user));
-        this.userService.send_fr(this.loginService.user.username, user.username).subscribe(function (data) {
-            JSON.stringify(data);
-        });
+        var loggedin_user = {
+            username: this.loginService.user.username,
+            firstname: this.loginService.user.firstname,
+            lastname: this.loginService.user.lastname
+        };
+        this.rtcService.send_fr(loggedin_user, user);
+        /*this.userService.send_fr(this.loginService.user.username,user.username).subscribe((data)=>{
+          JSON.stringify(data);
+        });*/
     };
     SearchComponent.prototype.search = function () {
         var _this = this;
@@ -634,7 +685,7 @@ var SearchComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/search/search.component.html"),
             styles: [__webpack_require__("./src/app/search/search.component.css")]
         }),
-        __metadata("design:paramtypes", [user_service_1.UserService, login_service_1.LoginService])
+        __metadata("design:paramtypes", [user_service_1.UserService, login_service_1.LoginService, rtc_service_1.RtcService])
     ], SearchComponent);
     return SearchComponent;
 }());
@@ -673,9 +724,22 @@ var ConfigService = /** @class */ (function () {
         };
         this.av = {
             video: true,
-            audio: true
+            audio: true //change this,
+        };
+        this.keys = {
+            AWS: '54.214.115.221',
+            AWS_PORT: '9200',
+            LOCAL: 'localhost',
+            L_IP: '192.168.0.5',
+            L_PORT: '9900'
+        };
+        this.ws_config = {
+            HOST: this.keys.AWS,
+            PORT: this.keys.AWS_PORT,
+            PROTO: 'wss://'
         };
     }
+    ConfigService.log = true;
     ConfigService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [])
@@ -683,6 +747,43 @@ var ConfigService = /** @class */ (function () {
     return ConfigService;
 }());
 exports.ConfigService = ConfigService;
+
+
+/***/ }),
+
+/***/ "./src/app/service/logging.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var config_service_1 = __webpack_require__("./src/app/service/config.service.ts");
+var LoggingService = /** @class */ (function () {
+    function LoggingService() {
+    }
+    LoggingService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [])
+    ], LoggingService);
+    return LoggingService;
+}());
+exports.LoggingService = LoggingService;
+function log(msg) {
+    if (config_service_1.ConfigService.log) {
+        console.log(msg);
+    }
+}
+exports.log = log;
 
 
 /***/ }),
@@ -752,18 +853,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var config_service_1 = __webpack_require__("./src/app/service/config.service.ts");
 var rtc_event_1 = __webpack_require__("./src/app/service/rtc_event.ts");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var logging_service_1 = __webpack_require__("./src/app/service/logging.service.ts");
+/**
+ * @author Divyank Sharma
+ * @description Provides RTC service requires websocket server listening at server side.
+ *              User is required to register first with a UUID some thing like a unique
+ *              username is a good option. After setting up peer user can listen for a
+ *              STREAM event and need to to keep litening for an INCOMING event for any
+ *              incoming calls.
+ */
 var RtcService = /** @class */ (function () {
     function RtcService(configService) {
         this.configService = configService;
-        /**
-         * -------------------------------------------- Setup messgaing ----------------------------------------------------
-         *
-         */
-        this.config = {
-            HOST: '192.168.0.5',
-            PORT: '9900',
-            PROTO: 'wss://'
-        };
         //---------------------------------------------------messaging is over -------------------------------------------------
         /**
          * ------------------------------------------------handle rtc peer connection ------------------------------------------
@@ -787,8 +888,10 @@ var RtcService = /** @class */ (function () {
         this.rtcEvent = new rtc_event_1.RTCEvent();
     }
     RtcService.prototype.register = function (username) {
-        this.WSS_URL = this.config.PROTO + this.config.HOST + ':' + this.config.PORT;
-        console.log('register is called with params ' + username);
+        this.WSS_URL = this.configService.ws_config.PROTO +
+            this.configService.ws_config.HOST + ':' +
+            this.configService.ws_config.PORT;
+        logging_service_1.log('register is called with params ' + username);
         if (this.username != username && this.ws) {
             this.ws.close();
             this.username = username;
@@ -799,7 +902,6 @@ var RtcService = /** @class */ (function () {
             this.ws = new WebSocket(this.WSS_URL + '?uname=' + username);
         }
         this.ws.onmessage = this.recv_ws_msg.bind(this);
-        //this.setup_peer();
     };
     RtcService.prototype.send = function (msg) {
         var _this = this;
@@ -823,8 +925,19 @@ var RtcService = /** @class */ (function () {
         else if (data.type === 'STATUS_UPDATE') {
             this.recv_friends_status(data);
         }
+        else if (data.type === 'INCOMING_FR') {
+            //u got a new fr ;)
+            console.log('got a new fr');
+            console.log(msg.data);
+            this.handle_incoming_fr(data);
+        }
+        else if (data.type === 'FR_ACCEPT') {
+            //handle accepted fr
+            console.log('your fr got accepted by ' + data.friend);
+            this.handle_accepted_fr(data);
+        }
         else {
-            console.log('error aaya hai on recv_ws_msg');
+            logging_service_1.log('error aaya hai on recv_ws_msg');
         }
     };
     RtcService.prototype.setup_peer = function () {
@@ -845,7 +958,7 @@ var RtcService = /** @class */ (function () {
         }
     };
     RtcService.prototype.add_new_ice = function (data) {
-        console.log('got ICE');
+        logging_service_1.log('got ICE');
         this.pc.addIceCandidate(new RTCIceCandidate(data.payload));
     };
     RtcService.prototype.add_stream = function (data) {
@@ -858,28 +971,28 @@ var RtcService = /** @class */ (function () {
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia);
         var evnt = new rtc_event_1.RTCEvent();
-        console.log(this.pc.iceConnectionState);
+        logging_service_1.log(this.pc.iceConnectionState);
         navigator.getUserMedia(this.configService.av, function (local_stream) {
             _this.pc.addStream(local_stream);
             _this.streams.local = local_stream;
-            evnt.emit('GOT_STREAM', data);
-        }, function (error) {
-            console.log(error);
-        });
-        navigator.getUserMedia(this.configService.video_only, function (local_stream) {
-            _this.streams.local_muted = local_stream;
+            navigator.getUserMedia(_this.configService.video_only, function (l_stream) {
+                _this.streams.local_muted = l_stream;
+                evnt.emit('GOT_STREAM', data);
+            }, function (error) {
+                console.log(error);
+            });
         }, function (error) {
             console.log(error);
         });
         return evnt;
     };
     RtcService.prototype.got_remote_stream = function (event) {
-        console.log('received remote stream');
+        logging_service_1.log('received remote stream');
         this.streams.remote = event.stream; //remote_stream;
         this.rtcEvent.emit('STREAM', this.streams);
     };
     RtcService.prototype.call = function (callee) {
-        console.log('call is called with username ' + this.username + ' and callee ' + callee);
+        logging_service_1.log('call is called with username ' + this.username + ' and callee ' + callee);
         this.callee = callee;
         this.add_stream(callee).on('GOT_STREAM', this.get_offer.bind(this, callee));
     };
@@ -890,7 +1003,7 @@ var RtcService = /** @class */ (function () {
         }
         if (msg.type === 'ANSWER_DESC') {
             this.pc.setRemoteDescription(new RTCSessionDescription(msg.payload)).then(function () {
-                console.log('remote is set now and rtciceconnectionstate is ' + _this.pc.iceConnectionState);
+                logging_service_1.log('remote is set now and rtciceconnectionstate is ' + _this.pc.iceConnectionState);
             });
         }
     };
@@ -902,7 +1015,7 @@ var RtcService = /** @class */ (function () {
     };
     RtcService.prototype.get_answer = function (msg) {
         var _this = this;
-        console.log('got answer is called');
+        logging_service_1.log('got answer is called');
         this.pc.setRemoteDescription(new RTCSessionDescription(msg.payload)).then(function () {
             _this.pc.createAnswer().then(function (answer) {
                 var new_msg = {
@@ -944,9 +1057,11 @@ var RtcService = /** @class */ (function () {
     RtcService.prototype.get_listeners = function () {
         return this.rtcEvent;
     };
-    RtcService.prototype.updateFriends = function (uname, friends) {
-        console.log('sending friends');
+    RtcService.prototype.updateFriends = function (uname, friends, req_sent, req_recv) {
+        logging_service_1.log('sending friends');
         this.friends = friends;
+        this.req_sent = req_sent;
+        this.req_recv = req_recv;
         var msg = {
             username: uname,
             FRIENDS: friends,
@@ -954,8 +1069,34 @@ var RtcService = /** @class */ (function () {
         };
         this.send(JSON.stringify(msg));
     };
+    RtcService.prototype.send_fr = function (user, friend) {
+        var msg = {
+            user: user,
+            friend: friend,
+            type: 'SFR'
+        };
+        this.req_sent.push(friend);
+        this.send(JSON.stringify(msg));
+    };
+    RtcService.prototype.accept_fr = function (user, friend) {
+        var msg = {
+            user: user,
+            friend: friend,
+            type: 'AFR'
+        };
+        this.friends.push(friend);
+        for (var i = 0; i < this.req_recv.length; i++) {
+            if (!this.req_recv[i] || this.req_recv[i].username === friend.username) {
+                //var index = this.req_recv.indexOf(i, 0);
+                //if (index > -1) {
+                this.req_recv.splice(i, 1);
+                //}
+            }
+        }
+        this.send(JSON.stringify(msg));
+    };
     RtcService.prototype.recv_friends_status = function (data) {
-        console.log('recving friends' + JSON.stringify(data));
+        logging_service_1.log('recving friends' + JSON.stringify(data));
         this.friends.forEach(function (friend) {
             data.friends.forEach(function (d) {
                 if (friend.username === d.f_id) {
@@ -968,6 +1109,20 @@ var RtcService = /** @class */ (function () {
                 }
             });
         });
+    };
+    RtcService.prototype.handle_incoming_fr = function (data) {
+        this.req_recv.push(data.friend);
+    };
+    RtcService.prototype.handle_accepted_fr = function (data) {
+        this.friends.push(data.friend);
+        for (var i = 0; i < this.req_sent.length; i++) {
+            if (!this.req_sent[i] || this.req_sent[i].username === data.friend.username) {
+                //var index = this.req_sent.indexOf(i, 0);
+                //if (index > -1) {
+                this.req_sent.splice(i, 1);
+                //}
+            }
+        }
     };
     RtcService = __decorate([
         core_1.Injectable(),
@@ -1077,7 +1232,7 @@ module.exports = ".nav-side-menu {\n    overflow: auto;\n    font-family: verdan
 /***/ "./src/app/sidebar/sidebar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"sidebar col-md-12\" style=\"overflow:auto;\">\n    <div class=\"side_tabs\"><a [routerLink]=\"['/home', {outlets: {'side': ['search']}}]\">Find Friends</a></div>\n    <div class=\"side_tabs\"><a [routerLink]=\"['/home', {outlets: {'side': ['profile']}}]\">Profile</a></div>\n    <div class=\"toggle-btn side_tabs\">\n        <font class=\"f_toggle\" data-toggle=\"collapse\" data-target=\"#menu-content\">Friends \n          <span class=\"f_count\">{{friends?.length}}</span></font>\n        <ul class=\"collapse p-0 m-0\" id=\"menu-content\">\n                <li class=\"nav-item li_friend\" *ngFor=\"let friend of friends\">\n                    <a class=\"nav-link\" (click)=\"makeCall(friend);\">\n                        <span data-feather=\"file-text\"></span>\n                        <svg height=\"10\" width=\"10\" *ngIf=\"friend.isOnline\" style=\"left:0\">\n                            <circle cx=\"5\" cy=\"5\" r=\"4\" fill=\"green\" />\n                        </svg>\n                        <svg height=\"10\" width=\"10\" *ngIf=\"!friend.isOnline\" style=\"left:0\">\n                            <circle cx=\"5\" cy=\"5\" r=\"4\" fill=\"white\" />\n                        </svg>\n                        {{friend.firstname}} {{friend.lastname}}\n                    </a>\n                </li>\n            </ul>\n    </div>\n    <div class=\"toggle-btn side_tabs\">\n        <font class=\"f_toggle\" data-toggle=\"collapse\" data-target=\"#fr\">Friend Requests\n          <span class=\"f_count\">{{friend_requests?.length}}</span></font>\n        <ul class=\"collapse p-0 m-0\" id=\"fr\">\n                <li class=\"nav-item li_friend\" *ngFor=\"let friend of friend_requests\">\n                    <a class=\"nav-link\" (click)=\"accept_fr(friend);\">\n                        <span data-feather=\"file-text\"></span>\n                        {{friend.firstname}} {{friend.lastname}}\n                    </a>\n                </li>\n            </ul>\n    </div>\n    <div class=\"toggle-btn side_tabs\">\n        <font class=\"f_toggle\" data-toggle=\"collapse\" data-target=\"#rs\">Requests sent \n          <span class=\"f_count\">{{requests_sent?.length}}</span></font>\n        <ul class=\"collapse p-0 m-0\" id=\"rs\">\n                <li class=\"nav-item li_friend\" *ngFor=\"let friend of requests_sent\">\n                    <a class=\"nav-link\">\n                        <span data-feather=\"file-text\"></span>\n                        {{friend.firstname}} {{friend.lastname}}\n                    </a>\n                </li>\n            </ul>\n    </div>\n</nav>"
+module.exports = "<nav class=\"sidebar col-md-12\" style=\"overflow:auto;\">\n    <div class=\"side_tabs\"><a [routerLink]=\"['/home', {outlets: {'side': ['search']}}]\">Find Friends</a></div>\n    <div class=\"side_tabs\"><a [routerLink]=\"['/home', {outlets: {'side': ['profile']}}]\">Profile</a></div>\n    <div class=\"toggle-btn side_tabs\">\n        <font class=\"f_toggle\" data-toggle=\"collapse\" data-target=\"#menu-content\">Friends \n          <span class=\"f_count\">{{friends?.length}}</span></font>\n        <ul class=\"collapse p-0 m-0\" id=\"menu-content\">\n                <li class=\"nav-item li_friend\" *ngFor=\"let friend of friends\">\n                    <a class=\"nav-link\" (click)=\"makeCall(friend);\">\n                        <span data-feather=\"file-text\"></span>\n                        <svg height=\"10\" width=\"10\" *ngIf=\"friend?.isOnline\" style=\"left:0\">\n                            <circle cx=\"5\" cy=\"5\" r=\"4\" fill=\"green\" />\n                        </svg>\n                        <svg height=\"10\" width=\"10\" *ngIf=\"!friend?.isOnline\" style=\"left:0\">\n                            <circle cx=\"5\" cy=\"5\" r=\"4\" fill=\"white\" />\n                        </svg>\n                        {{friend?.firstname}} {{friend?.lastname}}\n                    </a>\n                </li>\n            </ul>\n    </div>\n    <div class=\"toggle-btn side_tabs\">\n        <font class=\"f_toggle\" data-toggle=\"collapse\" data-target=\"#fr\">Friend Requests\n          <span class=\"f_count\">{{friend_requests?.length}}</span></font>\n        <ul class=\"collapse p-0 m-0\" id=\"fr\">\n                <li class=\"nav-item li_friend\" *ngFor=\"let friend of friend_requests\">\n                    <a class=\"nav-link\" (click)=\"accept_fr(friend);\">\n                        <span data-feather=\"file-text\"></span>\n                        {{friend.firstname}} {{friend.lastname}}\n                    </a>\n                </li>\n            </ul>\n    </div>\n    <div class=\"toggle-btn side_tabs\">\n        <font class=\"f_toggle\" data-toggle=\"collapse\" data-target=\"#rs\">Requests sent \n          <span class=\"f_count\">{{requests_sent?.length}}</span></font>\n        <ul class=\"collapse p-0 m-0\" id=\"rs\">\n                <li class=\"nav-item li_friend\" *ngFor=\"let friend of requests_sent\">\n                    <a class=\"nav-link\">\n                        <span data-feather=\"file-text\"></span>\n                        {{friend.firstname}} {{friend.lastname}}\n                    </a>\n                </li>\n            </ul>\n    </div>\n</nav>"
 
 /***/ }),
 
@@ -1123,8 +1278,9 @@ var SidebarComponent = /** @class */ (function () {
     SidebarComponent.prototype.ngOnInit = function () {
         var _this = this;
         var user = this.loginService.user;
-        if (user == null) {
+        if (!user || user === null) {
             this.router.navigateByUrl('login');
+            return;
         }
         if (!user.sent) {
             user.sent = [];
@@ -1136,7 +1292,7 @@ var SidebarComponent = /** @class */ (function () {
         this.userService.get_friends(user.username).subscribe(function (data) {
             _this.friends = data;
             _this.rtcService.register(user.username);
-            _this.rtcService.updateFriends(user.username, _this.friends);
+            _this.rtcService.updateFriends(user.username, _this.friends, _this.requests_sent, _this.friend_requests);
         });
         var pendings = [].concat(user.pending).concat(user.sent);
         this.userService.get_users(pendings).subscribe(function (data) {
@@ -1152,13 +1308,20 @@ var SidebarComponent = /** @class */ (function () {
         });
     };
     SidebarComponent.prototype.makeCall = function (user) {
-        this.emmiter.emit(user.username);
+        if (user.isOnline)
+            this.emmiter.emit(user.username);
     };
     SidebarComponent.prototype.accept_fr = function (user) {
         console.log(' called afr ' + JSON.stringify(user));
-        this.userService.accept_fr(this.loginService.user.username, user.username).subscribe(function (data) {
-            console.log(data);
-        });
+        var loggedin_user = {
+            username: this.loginService.user.username,
+            firstname: this.loginService.user.firstname,
+            lastname: this.loginService.user.lastname
+        };
+        this.rtcService.accept_fr(loggedin_user, user);
+        //this.userService.accept_fr(this.loginService.user.username,user.username).subscribe((data)=>{
+        //  console.log(data);
+        //});
     };
     __decorate([
         core_1.Output(),
